@@ -16,7 +16,6 @@ const App = (() => {
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
     current = view;
-    // Always re-render dashboard and history (live data)
     if (view === 'dashboard' || view === 'history' || !rendered.has(view)) {
       renderers[view]();
       rendered.add(view);
@@ -28,9 +27,8 @@ const App = (() => {
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => navigate(btn.dataset.view));
     });
-    // Register service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
     }
     navigate('dashboard');
   }
